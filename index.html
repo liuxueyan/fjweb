@@ -740,6 +740,69 @@
             font-size: 0.95rem;
         }
 
+        /* QR Code Section */
+        .qr-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .qr-section h4 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qr-section h4 i {
+            color: var(--gold-color);
+        }
+
+        .qr-codes {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .qr-item {
+            text-align: center;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .qr-item img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            border: 2px solid var(--gold-color);
+            padding: 5px;
+            background: var(--white);
+            object-fit: contain;
+        }
+
+        .qr-item span {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .qr-item .qr-icon {
+            font-size: 1.2rem;
+            margin-right: 5px;
+        }
+
+        .qr-wechat .qr-icon {
+            color: #07C160;
+        }
+
+        .qr-whatsapp .qr-icon {
+            color: #25D366;
+        }
+
         .contact-form {
             background: var(--light-gray);
             padding: 50px;
@@ -1001,6 +1064,16 @@
 
             .contact-form {
                 padding: 30px;
+            }
+        }
+
+            .qr-codes {
+                justify-content: center;
+            }
+            
+            .qr-item img {
+                width: 120px;
+                height: 120px;
             }
         }
 
@@ -1407,6 +1480,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="qr-section">
+                        <h4><i class="fas fa-qrcode"></i> Scan to Connect</h4>
+                        <div class="qr-codes">
+                            <div class="qr-item qr-wechat">
+                                <img src="img/wechat_qr.png" alt="WeChat QR Code">
+                                <span><i class="fab fa-weixin qr-icon"></i> WeChat</span>
+                            </div>
+                            <div class="qr-item qr-whatsapp">
+                                <img src="img/whatsapp_qr.png" alt="WhatsApp QR Code">
+                                <span><i class="fab fa-whatsapp qr-icon"></i> WhatsApp</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="contact-form">
                     <form id="contactForm">
@@ -1506,10 +1592,28 @@
             });
         });
 
-        // Form Submission
+        // Form Submission - Open local email client
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            const subject = encodeURIComponent('Inquiry from ' + name + ' - PT FUJIZY LIFT Website');
+            const body = encodeURIComponent(
+                'Dear PT FUJIZY LIFT Team,\n\n' +
+                'I am interested in your elevator solutions. Please find my details below:\n\n' +
+                'Name: ' + name + '\n' +
+                'Email: ' + email + '\n' +
+                'Phone: ' + (phone || 'Not provided') + '\n\n' +
+                'Message:\n' + message + '\n\n' +
+                'Best regards,\n' + name
+            );
+            
+            window.location.href = 'mailto:info@fujizylift.co.id?subject=' + subject + '&body=' + body;
+            
             this.reset();
         });
 
